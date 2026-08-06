@@ -73,11 +73,23 @@ void symtab_free(symbol_table *table)
 }
 
 boolean check_label(char *name, symbol_table *table){
-    if(label_len>MAX_LABEL_LENGTH){
+    //written by maya
+    int label_len=sizeof(name);
+    if(label_len>MAX_LABEL_LENGTH||label_len==0){
         return FALSE;
     }
+    if(!is_letter(name[0])||name[label_len-1]!=':'){
+        return FALSE;
+    }
+    name[label_len-1]!='\0'; //erase ':'
     if(symtab_find(table,name)!=NULL){
         return FALSE;
+    }
+    while(*name!='\0'){
+        if(!(is_letter(*name)||is_number(*name)){
+            return FALSE;
+        }
+        name++;
     }
     return TRUE;
 }
