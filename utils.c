@@ -87,5 +87,6 @@ char* get_next_word(char *line,char *res){
     while(*line!=' ' && *line!='\t' && *line!='\n'&&*line!='\0'&& *line!=','){
         res[j]=line;line++;j++;
     }
+    res[j]='\0';
     return line;
 }
