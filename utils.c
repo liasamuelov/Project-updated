@@ -69,3 +69,13 @@ char *replace_extension(const char *filename, const char *new_extension)
     strcat(result, new_extension);
     return result;
 }
+
+char* get_word(char *line){
+    //written by maya
+    char *str[MAX_LINE_LENGTH+1];
+    int j=0;
+    while(*line!=' ' && *line!='\t' && *line!='\n'&&*line!='\0'){
+        str[j]=str[i];line++;j++;
+    }
+    return str;
+}
