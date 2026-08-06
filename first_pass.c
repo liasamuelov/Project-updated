@@ -40,14 +40,62 @@
  */
 #include <stdio.h>
 #include "first_pass.h"
+#include <string.h>
 
-boolean first_pass(FILE *am_file, const char *filename,
-                   memory_image *img, symbol_table *symtab)
-{
-    (void)am_file;
-    (void)filename;
+boolean first_pass(FILE *am_file, const char *filename,memory_image *img, symbol_table *symtab){
+    boolean error_flag=FALSE;
+    //(void)am_file;
+    //(void)filename;
     (void)img;
     (void)symtab;
-    printf("first_pass: not implemented yet (owner: Maya)\n");
-    return TRUE;
+    image_init(img);
+    FILE *fp;
+    char line[MAX_LINE_LENGTH];
+    fp = fopen(filename, "r");
+    int line_counter=0;
+    char *word[MAX_LINE_LENGTH];
+    while(fgets(line, MAX_LINE_LENGTH, fp) != NULL){
+        line_counter++;
+        if(line[0]=='\n'||is_empty_line(line)||is_comment_line(line)){
+            continue;
+        }
+        //check line size
+        if(sizeof(line)>MAX_LINE_LENGTH){
+            report_error(filename,line_counter);//add error type
+            coninue;
+        }
+        line=get_word(line,word);
+        instruction_info command_info=find_instruction(word);
+        if(command_info==NULL){
+            //command is either a label or error, let's check if it's a valid label
+            char *label;
+            strcpy(label,word);
+            //command is a label;
+            int label_len=sizeof(label);
+            if(!check_label(symtab, label)){
+                error_flag=TRUE;
+                report_error(filename,line_counter);//add error type
+                continue;
+            }
+            label[label_len-1]='\0';//removing ':'
+            line=get_word(line,word);
+            if(sizeof(line)==0){
+                report_error(filename,line_counter);//add error type
+                continue;
+            }
+            char *command;
+            strcpy(command,word);
+            instruction_info label_type=find_instruction(command);
+            if(label_type==NULL){
+                report_error(filename,line_counter);//add error type
+                continue;
+            }
+
+
+            //symtab_add(symtab, command);
+        }
+        
+    }
+    //printf("first_pass: not implemented yet (owner: Maya)\n");
+    return error_flag;
 }
