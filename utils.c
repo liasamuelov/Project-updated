@@ -90,3 +90,6 @@ char* get_next_word(char *line,char *res){
     res[j]='\0';
     return line;
 }
+boolean is letter(char character){
+    return (('a'<=character&&character<='z')||('A'<=character&&character<='Z'))
+}
