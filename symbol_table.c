@@ -71,3 +71,13 @@ void symtab_free(symbol_table *table)
     }
     table->head = NULL;
 }
+
+boolean check_label(char *name, symbol_table *table){
+    if(label_len>MAX_LABEL_LENGTH){
+        return FALSE;
+    }
+    if(symtab_find(table,name)!=NULL){
+        return FALSE;
+    }
+    return TRUE;
+}
