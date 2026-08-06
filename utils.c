@@ -70,6 +70,16 @@ char *replace_extension(const char *filename, const char *new_extension)
     return result;
 }
 
+const char *skip_whitespace_and_one_coma(const char *s)
+{
+    int c=0;
+    while( (*s == ' ' || *s == '\t'||*s==',')&&(c<1)){
+        if(*s==',')c++;
+        s++;
+    }
+    return s;
+}
+
 char* get_next_word(char *line,char *res){
     //written by maya
     int j=0;
