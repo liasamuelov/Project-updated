@@ -70,12 +70,12 @@ char *replace_extension(const char *filename, const char *new_extension)
     return result;
 }
 
-char* get_word(char *line){
+char* get_next_word(char *line,char *res){
     //written by maya
-    char *str[MAX_LINE_LENGTH+1];
     int j=0;
+    line=skip_white_spaces(line);
     while(*line!=' ' && *line!='\t' && *line!='\n'&&*line!='\0'){
-        str[j]=str[i];line++;j++;
+        res[j]=line;line++;j++;
     }
-    return str;
+    return line;
 }
