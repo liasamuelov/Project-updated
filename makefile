@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic
-OBJS = assembler.o preprocessor.o macro_table.o first_pass.o second_pass.o \
+OBJS = assembler.o preprocessor.o macro_table.o encode.o first_pass.o second_pass.o \
        output.o instructions.o symbol_table.o memory_image.o utils.o errors.o
 
 assembler: $(OBJS)
@@ -25,3 +25,4 @@ errors.o: errors.c errors.h globals.h
 
 clean:
 	rm -f *.o assembler tests/*.am tests/*.ob tests/*.ent tests/*.ext
+encode.o: encode.c encode.h
