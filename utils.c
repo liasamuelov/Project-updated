@@ -74,7 +74,7 @@ char* get_next_word(char *line,char *res){
     //written by maya
     int j=0;
     line=skip_white_spaces(line);
-    while(*line!=' ' && *line!='\t' && *line!='\n'&&*line!='\0'){
+    while(*line!=' ' && *line!='\t' && *line!='\n'&&*line!='\0'&& *line!=','){
         res[j]=line;line++;j++;
     }
     return line;
