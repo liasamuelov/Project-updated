@@ -97,3 +97,40 @@ boolean is_number(char character){
     return ('0'<=character&&character<='9');
 }
 
+/* String-literal validation: TRUE if 'text' is a double-quoted
+ * sequence of printable ASCII characters (quotes not included in
+ * the value). On success, the content (without quotes) is copied
+ * into 'out_buffer' (caller-supplied, at least MAX_LINE_LENGTH+1
+ * bytes). */
+Boolean parse_string_literal(const char *text, char *out_buffer){
+    if(text[0]!='"')return FALSE;
+    int i=1;
+    while(text[i]!=eof){
+        if(text[i]<32)return FALSE;//32 min printable ascii;
+        i++;
+    }
+    if(i>Max_String_length||i<2)return FALSE;
+    if(text[i-1]!='"')return FALSE;
+    i--;
+    out_buffer[i]='\0';
+    while(i>=0){
+        out_buffer[i]=text[i+1];
+        i--;
+    }
+    return true;
+}
+
+/* Register-name validation: parses forms like "$0".."$31". Returns
+ * TRUE and writes the register number to *out_reg_num on success. */
+Boolean parse_register(const char *text, int *out_reg_num){
+    if(text[0]!='$')return FALSE;
+    int n=text[1]-'0';
+    if(text[2]!=eof){
+        n*=10;
+        n+=text[2]-'0';
+    }
+    if(n>NUM_REGISTERS)return FALSE;
+    if(text[3]!=eof)return FALSE;
+    return TRUE;
+}
+
