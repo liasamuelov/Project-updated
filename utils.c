@@ -69,7 +69,12 @@ char *replace_extension(const char *filename, const char *new_extension)
     strcat(result, new_extension);
     return result;
 }
-
+boolean comma_exists(const char *s){
+    while( (*s == ' ' || *s == '\t'||*s==',')&&(c<1)){
+        s++;
+    }
+    return (s==',');
+}
 const char *skip_whitespace_and_one_coma(const char *s)
 {
     int c=0;
